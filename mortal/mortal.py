@@ -19,7 +19,8 @@ ARGS:
 
 def main():
     try:
-        player_id = int(sys.argv[-1])
+        player_id = int(sys.argv[-2])
+        log_file = sys.argv[-1]
         assert player_id in range(4)
     except:
         print(USAGE, file=sys.stderr)
@@ -55,7 +56,11 @@ def main():
 
     if review_mode:
         logs = []
-    for line in filtered_trimmed_lines(sys.stdin):
+    data = []
+    with open(config['run']['log_file']) as f:
+        for line in f:
+            data.append(line)
+    for line in filtered_trimmed_lines(data):
         if review_mode:
             logs.append(line)
 
